@@ -1,5 +1,5 @@
 /* ==========
-  Version 3.0.9
+  Version 3.0.9 Updating a Release
   Blog Banner Styles Plugin for Squarespace
   Copyright Will Myers 
 ========== */
