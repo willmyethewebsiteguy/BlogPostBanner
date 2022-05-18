@@ -1,5 +1,5 @@
 /* ==========
-  Version 3.0.9 Updating a Release 2
+  Version 3.0.9 Updating a Release 3
   Blog Banner Styles Plugin for Squarespace
   Copyright Will Myers 
 ========== */
@@ -70,7 +70,7 @@
     });
 
 
-    /*If 7.0 Website*/
+    //If 7.0 Website
     if (window.Static.SQUARESPACE_CONTEXT.templateVersion == "7") {
       document.querySelector("body").classList.add("sqs-seven");
       $sectionBackground.classList.add("Index-page--has-image");
