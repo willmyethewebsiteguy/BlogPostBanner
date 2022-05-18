@@ -70,7 +70,7 @@
     });
 
 
-    //If 7.0 Website
+    /*If 7.0 Website*/
     if (window.Static.SQUARESPACE_CONTEXT.templateVersion == "7") {
       document.querySelector("body").classList.add("sqs-seven");
       $sectionBackground.classList.add("Index-page--has-image");
