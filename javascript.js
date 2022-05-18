@@ -1,5 +1,5 @@
 /* ==========
-  Version 3.0.7
+  Version 3.0.9
   Blog Banner Styles Plugin for Squarespace
   Copyright Will Myers 
 ========== */
@@ -7,7 +7,7 @@
   let $configEl = $('[data-wm-plugin="blog-post"]');
 
   function initBlogBanner() {
-      let cssFile = 'https://assets.codepen.io/3198845/WMBlogPostBanner72020v3.0.7.css';
+      let cssFile = 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/BlogPostBanner@3.0.9/styles.min.css';
       addCSSFileToHeader(cssFile);
       function addCSSFileToHeader(url){
         let head = document.getElementsByTagName('head')[0],
