@@ -200,11 +200,11 @@
     function ifInEditMode(mutationList, observer) {
       // Use traditional 'for loops' for IE 11
       if (targetNode.classList.contains("sqs-layout-editing")) {
-        $('link[href*="WMBlogPostBanner"]').attr("disabled", "disabled");
+        $('link[href*="BlogPostBanner"]').attr("disabled", "disabled");
         $(".wm-blog-banner .section-background-image").hide();
         $(".wm-blog-banner .section-background-content").hide();
       } else {
-        $('link[href*="WMBlogPostBanner"]').removeAttr("disabled");
+        $('link[href*="BlogPostBanner"]').removeAttr("disabled");
         $(".wm-blog-banner .section-background-image").show();
         $(".wm-blog-banner .section-background-content").show();
       }
