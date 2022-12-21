@@ -269,9 +269,7 @@
               s.style.position = 'absolute';
               s.style.zIndex = '1';
               s.style.opacity = '0';
-              console.log(s)
               window.setTimeout(function(){
-                console.log(s)
                 s.style.display = ''
                 s.style.position = 'relative';
                 s.style.zIndex = '';
