@@ -2,7 +2,7 @@
   Version 3
   Blog Banner Styles Plugin for Squarespace
   Copyright Will Myers 
-========== */
+========== */    
 (function(){
   let $configEl = $('[data-wm-plugin="blog-post"]');
 
@@ -12,13 +12,13 @@
       addCSSFileToHeader(cssFile);
     }
     function addCSSFileToHeader(url){
-        let head = document.getElementsByTagName('head')[0],
-            link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = url;
-        head.appendChild(link);
-      }
+      let head = document.getElementsByTagName('head')[0],
+          link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = url;
+      head.appendChild(link);
+    }
     //Config Styles
     let style =
         $configEl.attr("data-post-style") == undefined
@@ -199,7 +199,6 @@
     );
     // Callback function to execute when mutations are observed
     function ifInEditMode(mutationList, observer) {
-      
       if (targetNode.classList.contains("sqs-layout-editing")) {
         $('link[href*="BlogPostBanner"]').attr("disabled", "disabled");
         $(".wm-blog-banner .section-background-image").hide();
@@ -264,17 +263,21 @@
           /*Fix for not working with Flex Animations*/
           let bodyCL = document.body.classList
           if (bodyCL.contains('tweak-global-animations-animation-type-flex')) {
-            let s = document.querySelector('.wm-banner-style-3 .has-banner .content-wrapper .blog-item-top-wrapper');
-            s.style.display = 'flex'
-            s.style.position = 'fixed';
-            s.style.zIndex = '-1';
-            s.style.opacity = '0'
-            window.setTimeout(function(){
-              s.style.display = ''
-              s.style.position = 'relative';
-              s.style.zIndex = '';
-              s.style.opacity = '1'
-            }, 2000)
+            let s = document.querySelector('.has-banner .content-wrapper .blog-item-top-wrapper');
+            if (s){
+              s.style.display = 'flex';
+              s.style.position = 'absolute';
+              s.style.zIndex = '1';
+              s.style.opacity = '0';
+              console.log(s)
+              window.setTimeout(function(){
+                console.log(s)
+                s.style.display = ''
+                s.style.position = 'relative';
+                s.style.zIndex = '';
+                s.style.opacity = '1'
+              }, 3000);
+            }
           }
           watchEditMode();
         }
