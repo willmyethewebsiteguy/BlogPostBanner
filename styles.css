@@ -399,14 +399,18 @@ main.container{
 
 /* Updates for new SS Border Changes */
 .wm-banner-style-1:not(.sqs-edit-mode-active) .page-section.has-banner > .section-border,
-.wm-banner-style-2:not(.sqs-edit-mode-active) .page-section.has-banner > .section-border{
+.wm-banner-style-2:not(.sqs-edit-mode-active) .page-section.has-banner > .section-border,
+.wm-banner-style-1:not(.sqs-edit-mode-active) .page-section.has-banner > .section-divider,
+.wm-banner-style-2:not(.sqs-edit-mode-active) .page-section.has-banner > .section-divider{
   position: relative;
   top: 0;
   width: 100%;
   display: flex;
 }
 .wm-banner-style-3:not(.sqs-edit-mode-active) .page-section.has-banner > .section-border,
-.wm-banner-style-4:not(.sqs-edit-mode-active) .page-section.has-banner > .section-border {
+.wm-banner-style-4:not(.sqs-edit-mode-active) .page-section.has-banner > .section-border, 
+.wm-banner-style-3:not(.sqs-edit-mode-active) .page-section.has-banner > .section-divider,
+.wm-banner-style-4:not(.sqs-edit-mode-active) .page-section.has-banner > .section-divider{
   width: 50%;
   min-height: 100vh;
   position: sticky;
@@ -418,7 +422,9 @@ main.container{
 } 
 @media(max-width:768px) {
   .wm-banner-style-3:not(.sqs-edit-mode-active) .page-section.has-banner > .section-border,
-  .wm-banner-style-4:not(.sqs-edit-mode-active) .page-section.has-banner > .section-border{
+  .wm-banner-style-4:not(.sqs-edit-mode-active) .page-section.has-banner > .section-border,
+  .wm-banner-style-3:not(.sqs-edit-mode-active) .page-section.has-banner > .section-divider,
+  .wm-banner-style-4:not(.sqs-edit-mode-active) .page-section.has-banner > .section-divider{
     top: 0;
     position: relative;
     width: 100%;
@@ -428,7 +434,9 @@ main.container{
 }
 
 .wm-banner-style-6:not(.sqs-edit-mode-active) .page-section.has-banner > .section-border,
-.wm-banner-style-5:not(.sqs-edit-mode-active) .page-section.has-banner > .section-border{
+.wm-banner-style-5:not(.sqs-edit-mode-active) .page-section.has-banner > .section-border, 
+.wm-banner-style-6:not(.sqs-edit-mode-active) .page-section.has-banner > .section-divider,
+.wm-banner-style-5:not(.sqs-edit-mode-active) .page-section.has-banner > .section-divider{
   top: 0;
   position: relative;
   width: 100%;
