@@ -256,6 +256,8 @@
 
   /* init 7.1 */
   if (window.Static.SQUARESPACE_CONTEXT.templateVersion !== "7") {
+    let isCollectionPage = !!document.querySelector('body[id*="collection"]');
+    if (isCollectionPage) return;
     let active = !!$configEl.not('[data-no-edit-mode]').length || (window.self == window.top);
       if($configEl.length && active){
         initBlogBanner();
