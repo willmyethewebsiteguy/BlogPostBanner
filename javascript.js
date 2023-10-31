@@ -245,7 +245,7 @@
   /* Load Images */
   let loadAllImages = () => {
     try {
-      var images = document.querySelectorAll("img[data-src]");
+      var images = document.querySelectorAll(".wm-blog-banner img[data-src]");
       for (var i = 0; i < images.length; i++) {
         ImageLoader.load(images[i], { load: true });
       }
