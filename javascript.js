@@ -7,7 +7,7 @@
   let $configEl = $('[data-wm-plugin="blog-post"]');
 
   function initBlogBanner() {
-    let cssFile = 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/BlogPostBanner@3/styles.min.css';
+    let cssFile = 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/BlogPostBanner@3/styles.min.css?v1';
     if(!document.querySelector('#wm-blog-banner-css')){
       addCSSFileToHeader(cssFile);
     }
@@ -36,6 +36,10 @@
         $configEl.attr("data-img-src") == undefined
     ? "thumbnail"
     : $configEl.attr("data-img-src"),
+        excerpt = 
+        $configEl.attr("data-excerpt") == undefined
+    ? false
+    : $configEl.attr("data-excerpt"),
         baseUrl = location.protocol + "//" + location.host + location.pathname,
         $section =
         document.querySelector(
@@ -65,9 +69,22 @@
           posY = data.item.mediaFocalPoint.y * 100 + "%",
           focalPoint = posX + " " + posY;
       body.style.setProperty("--image-focal-point", focalPoint);
+      if (imgSrc == "seo") {
+        if (postData.item.seoData && postData.item.seoData.seoImage && postData.item.seoData.seoImage.assetUrl) {
+            imgSrc = postData.item.seoData.seoImage.assetUrl;
+        } else {
+            imgSrc = postData.item.assetUrl;
+        }
+        buildImage();
+      }
       if (imgSrc == "thumbnail") {
         imgSrc = postData.item.assetUrl;
         buildImage();
+      }
+      if (excerpt == 'true' || excerpt == true) {
+        excerpt = postData.item.excerpt;
+        let excerptHTML = `<div class="excerpt">${excerpt}</div>`;
+        $titleClone.insertAdjacentHTML('beforeend', excerptHTML);
       }
     });
 
@@ -136,7 +153,7 @@
       "section-background-content",
       "blog-item-wrapper"
     );
-    if (imgSrc !== 'thumbnail') {
+    if (imgSrc !== 'thumbnail' && imgSrc !== 'seo') {
       buildImage() 
     }
 
