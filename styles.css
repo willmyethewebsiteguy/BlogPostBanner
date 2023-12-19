@@ -71,9 +71,15 @@ body {
 #page .has-banner .blog-item-top-wrapper.clone .blog-meta-item, 
 #page .has-banner .blog-item-top-wrapper.clone .blog-meta-item a, 
 #page .has-banner .blog-item-top-wrapper.clone .blog-meta-item span, 
-#page .has-banner .blog-item-top-wrapper.clone .blog-item-title h1.entry-title {
+#page .has-banner .blog-item-top-wrapper.clone .blog-item-title h1.entry-title,
+#page .has-banner .blog-item-top-wrapper.clone .excerpt *{
   color: var(--blog-title-color, var(--blog-header-color, black));
 }
+#page .has-banner .blog-item-top-wrapper.clone .excerpt {
+  order: 3;
+  position:relative;
+}
+
 body.tweak-wm-banner.tweak-transparent-header:not(.header--menu-open) #header .header-nav-wrapper .header-nav-item > a, 
 body.tweak-wm-banner.tweak-transparent-header:not(.header--menu-open) #header .icon-cart-quantity {
   color: var(--blog-title-color, var(--blog-header-color, black));
