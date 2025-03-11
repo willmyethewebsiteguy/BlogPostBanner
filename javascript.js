@@ -218,6 +218,7 @@
     function ifInEditMode(mutationList, observer) {
       if (targetNode.classList.contains("sqs-layout-editing")) {
         $('link[href*="BlogPostBanner"]').attr("disabled", "disabled");
+        $('link#wm-blog-banner-css').attr("disabled", "disabled");
         $(".wm-blog-banner .section-background-image").hide();
         $(".wm-blog-banner .section-background-content").hide();
       } else {
