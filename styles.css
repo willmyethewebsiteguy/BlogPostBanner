@@ -75,7 +75,7 @@ body {
 #page .has-banner .blog-item-top-wrapper.clone .excerpt *{
   color: var(--blog-title-color, var(--blog-header-color, black));
 }
-#page .has-banner .blog-item-top-wrapper.clone .excerpt {
+#page .has-banner .blog-item-top-wrapper .excerpt {
   order: 3;
   position:relative;
 }
@@ -236,7 +236,6 @@ main.container{
     background-color:transparent;
     z-index: 1;
   }
-
 
   /*Style 3 - 7.0*/
   .sqs-seven.wm-banner-style-3 .Main--blog-item.has-banner {
