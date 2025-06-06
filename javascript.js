@@ -84,6 +84,7 @@
       if (excerpt == 'true' || excerpt == true) {
         excerpt = postData.item.excerpt;
         let excerptHTML = `<div class="excerpt">${excerpt}</div>`;
+        $title.insertAdjacentHTML('beforeend', excerptHTML);
         $titleClone.insertAdjacentHTML('beforeend', excerptHTML);
       }
     });
