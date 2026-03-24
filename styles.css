@@ -80,7 +80,8 @@ body {
   position:relative;
 }
 
-body.tweak-wm-banner.tweak-transparent-header:not(.header--menu-open) #header .header-nav-wrapper .header-nav-item > a, 
+body.tweak-wm-banner.tweak-transparent-header:not(.header--menu-open) #header .header-nav-wrapper .header-nav-item > a,
+body.tweak-wm-banner.tweak-transparent-header:not(.header--menu-open) #header .header-nav-wrapper .header-nav-item > button,
 body.tweak-wm-banner.tweak-transparent-header:not(.header--menu-open) #header .icon-cart-quantity {
   color: var(--blog-title-color, var(--blog-header-color, black));
 }
@@ -89,9 +90,15 @@ body.tweak-wm-banner.tweak-transparent-header:not(.header--menu-open) #header .h
   background-color: var(--blog-title-color, var(--blog-header-color, black));
   border-color: var(--blog-title-color, var(--blog-header-color, black));
 }
-body.tweak-wm-banner.tweak-transparent-header:not(.header--menu-open) #header .header-actions svg{
+body.tweak-wm-banner.tweak-transparent-header:not(.header--menu-open) #header .header-actions svg,
+body.tweak-wm-banner.tweak-transparent-header:not(.header--menu-open) #header .header-nav-wrapper .header-nav-item svg {
   fill: var(--blog-title-color, var(--blog-header-color, black));
   stroke: var(--blog-title-color, var(--blog-header-color, black));
+}
+body.tweak-wm-banner.tweak-transparent-header:not(.header--menu-open) .burger-inner .top-bun, 
+body.tweak-wm-banner.tweak-transparent-header:not(.header--menu-open) .burger-inner .patty, 
+body.tweak-wm-banner.tweak-transparent-header:not(.header--menu-open) .burger-inner .bottom-bun {
+  background-color: var(--blog-title-color, var(--blog-header-color, black));
 }
 /*7.0 Specific CSS*/
 body.sqs-seven {
