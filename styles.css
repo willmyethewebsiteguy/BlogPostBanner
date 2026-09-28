@@ -11,7 +11,7 @@ body {
   --blog-glass-background:hsla(0,0%,0%,.27);
 }
 .tweak-wm-banner .content-collection.has-banner,
-.tweak-wm-banner [data-sqsp-section="blog-item"].cdk-section.has-banner {
+.tweak-wm-banner [data-sqsp-section="blog-item"].has-banner {
   flex-direction:column;
   padding-top:0px !important; 
 }
