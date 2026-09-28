@@ -10,7 +10,8 @@ body {
   --section-background-color:white;
   --blog-glass-background:hsla(0,0%,0%,.27);
 }
-.tweak-wm-banner .content-collection.has-banner {
+.tweak-wm-banner .content-collection.has-banner,
+.tweak-wm-banner [data-sqsp-section="blog-item"].cdk-section.has-banner {
   flex-direction:column;
   padding-top:0px !important; 
 }
@@ -465,4 +466,40 @@ main.container{
   position: relative;
   width: 100%;
   display: flex;
+}
+
+/* New Squarespace collection backgrounds have inline positioning.
+   Override it only while this plugin is active. Legacy markup is unchanged. */
+[data-sqsp-section="blog-item"].cdk-section.has-banner .sqs-section-background.wm-blog-banner {
+  position: relative !important;
+  inset: 0 !important;
+  pointer-events: auto !important;
+}
+[data-sqsp-section="blog-item"].cdk-section.has-banner .wm-blog-banner .section-background-content {
+  position: relative;
+}
+.wm-blog-title-context {
+  width: 100%;
+}
+/* Preserve plugin widths when native article settings have higher specificity. */
+@media (min-width: 768px) {
+  .wm-banner-style-3 [data-sqsp-section="blog-item"].cdk-section.has-banner article.h-entry .blog-item-inner-wrapper,
+  .wm-banner-style-4 [data-sqsp-section="blog-item"].cdk-section.has-banner article.h-entry .blog-item-inner-wrapper {
+    width: 100%;
+  }
+  .wm-banner-style-5 [data-sqsp-section="blog-item"].cdk-section.has-banner article.h-entry .blog-item-inner-wrapper {
+    width: var(--section-content-width, 50%);
+  }
+}
+/* Native component styles now outrank the old body tweak selectors. */
+.wm-banner-style-1 [data-sqsp-section="blog-item"].cdk-section.has-banner .blog-item-top-wrapper:not(.clone),
+.wm-banner-style-3 [data-sqsp-section="blog-item"].cdk-section.has-banner .blog-item-top-wrapper:not(.clone),
+.wm-banner-style-6 [data-sqsp-section="blog-item"].cdk-section.has-banner .blog-item-top-wrapper:not(.clone),
+.wm-banner-style-2 [data-sqsp-section="blog-item"].cdk-section.has-banner .blog-item-top-wrapper.clone,
+.wm-banner-style-4 [data-sqsp-section="blog-item"].cdk-section.has-banner .blog-item-top-wrapper.clone,
+.wm-banner-style-5 [data-sqsp-section="blog-item"].cdk-section.has-banner .blog-item-top-wrapper.clone {
+  display: none;
+}
+.wm-banner-style-5 [data-sqsp-section="blog-item"].cdk-section.has-banner article.h-entry .blog-item-inner-wrapper {
+  margin-top: -30vh;
 }

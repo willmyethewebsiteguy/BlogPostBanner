@@ -4,9 +4,20 @@
   Copyright Will Myers 
 ========== */    
 (function(){
+  const context = (window.Static && window.Static.SQUARESPACE_CONTEXT) || {};
   let $configEl = $('[data-wm-plugin="blog-post"]');
 
   function initBlogBanner() {
+    // The new collection architecture uses a stable section attribute.
+    // Keep the legacy selectors for existing 7.1 and 7.0 installations.
+    const $section = document.querySelector('[data-sqsp-section="blog-item"]') ||
+      document.querySelector('#sections > .page-section.content-collection') ||
+      document.querySelector('main.Main--blog-item') ||
+      document.querySelector('main.Main--events-item');
+    if (!$section || $section.querySelector('.wm-blog-banner')) return;
+    const $sectionContent = $section.querySelector('.content-wrapper, section.Main-content');
+    if (!$sectionContent) return;
+
     let cssFile = 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/BlogPostBanner@3/styles.min.css?v3';
     if(!document.querySelector('#wm-blog-banner-css')){
       addCSSFileToHeader(cssFile);
@@ -41,18 +52,9 @@
     ? false
     : $configEl.attr("data-excerpt"),
         baseUrl = location.protocol + "//" + location.host + location.pathname,
-        $section =
-        document.querySelector(
-          "#sections > .page-section.content-collection"
-        ) ||
-        document.querySelector("main.Main--blog-item") ||
-        document.querySelector("main.Main--events-item"),
         $sectionBackground =
-        $section.querySelector(".section-background") ||
+        $section.querySelector(".sqs-section-background, .section-background") ||
         document.createElement("section"),
-        $sectionContent =
-        $section.querySelector(".content-wrapper") ||
-        $section.querySelector("section.Main-content"),
         $title =
         $sectionContent.querySelector(".blog-item-top-wrapper") ||
         $sectionContent.querySelector(".eventitem-column-meta") ||
@@ -64,9 +66,11 @@
     let postData;
     
     $.getJSON(baseUrl + "/?format=json-pretty", {_: new Date().getTime()} ,function (data) {
+      if (!data || !data.item) return;
       postData = data;
-      let posX = data.item.mediaFocalPoint.x * 100 + "%",
-          posY = data.item.mediaFocalPoint.y * 100 + "%",
+      const focal = data.item.mediaFocalPoint || { x: 0.5, y: 0.5 };
+      let posX = focal.x * 100 + "%",
+          posY = focal.y * 100 + "%",
           focalPoint = posX + " " + posY;
       body.style.setProperty("--image-focal-point", focalPoint);
       if (imgSrc == "seo") {
@@ -91,7 +95,7 @@
 
 
     //If 7.0 Website
-    if (window.Static.SQUARESPACE_CONTEXT.templateVersion == "7") {
+    if (context.templateVersion == "7") {
       document.querySelector("body").classList.add("sqs-seven");
       $sectionBackground.classList.add("Index-page--has-image");
       let main = document.querySelector("main.Main--blog-item");
@@ -130,6 +134,7 @@
       }
     }
 
+    if (!$sectionBackground.parentNode) $section.prepend($sectionBackground);
     body.classList.add("wm-banner-style-" + style);
     $section.classList.add("has-banner");
     $sectionBackground.classList.add("wm-blog-banner");
@@ -162,26 +167,47 @@
     $sectionBackground.append(sectionBackgroundImg);
     $sectionBackground.append(sectionBackgroundContent);
 
-    //Add in Title
-    sectionBackgroundContent.append($titleClone);
+    // New blog styles read the article attributes, not body tweak classes.
+    // Keep those settings on the cloned title without copying its ID or schema.
+    const article = $sectionContent.querySelector('article.h-entry[data-content-width]');
+    if (article) {
+      const titleContext = document.createElement('article');
+      titleContext.className = 'h-entry wm-blog-title-context';
+      for (const name of ['data-text-alignment', 'data-meta-position',
+        'data-delimiter-style', 'data-show-categories', 'data-show-date',
+        'data-show-author-name']) {
+        if (article.hasAttribute(name)) {
+          titleContext.setAttribute(name, article.getAttribute(name));
+        }
+      }
+      titleContext.append($titleClone);
+      sectionBackgroundContent.append(titleContext);
+    } else {
+      sectionBackgroundContent.append($titleClone);
+    }
 
     //Make Content Background Same Color on 7.1
+    const colorSource = $sectionBackground.classList.contains('sqs-section-background')
+      ? ($sectionBackground.closest('.section-border') || $sectionBackground)
+      : $sectionBackground;
     let backgroundColor = window
-    .getComputedStyle($sectionBackground)
+    .getComputedStyle(colorSource)
     .getPropertyValue("background-color");
-    if (window.Static.SQUARESPACE_CONTEXT.templateVersion !== "7") {
+    if (context.templateVersion !== "7") {
       body.style.setProperty("--section-background-color", backgroundColor);
     }
 
     function buildImage() {
+      if (!imgSrc) return;
       let img = document.createElement("img") ;
+      img.alt = "";
       img.setAttribute("data-src", imgSrc);
       img.src = imgSrc;
       sectionBackgroundImg.append(img);
     }
 
     //Set Content Width Variable
-    if (window.Static.SQUARESPACE_CONTEXT.templateVersion !== "7") {
+    if (context.templateVersion !== "7") {
       try {
         let sectionWidth = findSectionWidth();
         body.style.setProperty("--section-content-width", sectionWidth);
@@ -190,7 +216,7 @@
       }
     }
 
-    if (window.Static.SQUARESPACE_CONTEXT.templateVersion == "7") {
+    if (context.templateVersion == "7") {
       document.addEventListener('DOMContentLoaded', function() {
         loadAllImages();
       })
@@ -217,13 +243,13 @@
     );
     // Callback function to execute when mutations are observed
     function ifInEditMode(mutationList, observer) {
-      if (targetNode.classList.contains("sqs-layout-editing")) {
+      if (targetNode.classList.contains("sqs-layout-editing") || targetNode.classList.contains("sqs-edit-mode-active")) {
         $('link[href*="BlogPostBanner"]').attr("disabled", "disabled");
         $('link#wm-blog-banner-css').attr("disabled", "disabled");
         $(".wm-blog-banner .section-background-image").hide();
         $(".wm-blog-banner .section-background-content").hide();
       } else {
-        $('link[href*="BlogPostBanner"]').removeAttr("disabled");
+        $('link[href*="BlogPostBanner"], link#wm-blog-banner-css').removeAttr("disabled");
         $(".wm-blog-banner .section-background-image").show();
         $(".wm-blog-banner .section-background-content").show();
       }
@@ -232,20 +258,23 @@
 
   /*Find Section Width in 7.1*/
   let findSectionWidth = () => {
+    const article = document.querySelector('[data-sqsp-section="blog-item"] .content-wrapper article[data-content-width]');
+    const tweaks = context.tweakJSON || {};
     let width,
-        tweakJSONWidth =
-        window.Static.SQUARESPACE_CONTEXT.tweakJSON["tweak-blog-item-width"];
-    if (tweakJSONWidth == "Narrow") {
+        tweakJSONWidth = article
+          ? article.getAttribute('data-content-width')
+          : tweaks["tweak-blog-item-width"];
+    tweakJSONWidth = (tweakJSONWidth || '').toLowerCase();
+    if (tweakJSONWidth == "narrow") {
       width = "50%";
-    } else if (tweakJSONWidth == "Medium") {
+    } else if (tweakJSONWidth == "medium") {
       width = "75%";
-    } else if (tweakJSONWidth == "Wide") {
+    } else if (tweakJSONWidth == "wide") {
       width = "100%";
-    } else if (tweakJSONWidth == "Custom") {
-      width =
-        window.Static.SQUARESPACE_CONTEXT.tweakJSON[
-        "tweak-blog-item-custom-width"
-      ] + "%";
+    } else if (tweakJSONWidth == "custom") {
+      width = article
+        ? getComputedStyle(article).getPropertyValue('--blog-item-custom-width').trim()
+        : tweaks["tweak-blog-item-custom-width"] + "%";
     }
     return width;
   };
@@ -274,7 +303,7 @@
   };
 
   /* init 7.1 */
-  if (window.Static.SQUARESPACE_CONTEXT.templateVersion !== "7") {
+  if (context.templateVersion !== "7") {
     let isCollectionPage = !!document.querySelector('body[id*="collection"]');
     if (isCollectionPage) return;
     let active = !!$configEl.not('[data-no-edit-mode]').length || (window.self == window.top);
@@ -283,7 +312,8 @@
         if (window.self !== window.top){
           /*Fix for not working with Flex Animations*/
           let bodyCL = document.body.classList
-          if (bodyCL.contains('tweak-global-animations-animation-type-flex')) {
+          if (bodyCL.contains('tweak-global-animations-animation-type-flex') &&
+              !document.querySelector('.cdk-section[data-sqsp-section="blog-item"]')) {
             let s = document.querySelector('.has-banner .content-wrapper .blog-item-top-wrapper');
             if (s){
               s.style.display = 'flex';
